@@ -1,10 +1,12 @@
 package de.neuefische.todoapp.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ToDo {
 
-    private String id;
+    private LocalDateTime dateTime;
     private String title;
     private String content;
 
@@ -12,15 +14,17 @@ public class ToDo {
 
     public ToDo(){
         this.status = Status.WAITING;
+        //Instant now = Instant.now();
+        this.dateTime = LocalDateTime.now();
     }
 
-    public String getId() {
-        return id;
+    public ToDo(String title){
+        this.status = Status.WAITING;
+//        Instant now = Instant.now();
+        this.dateTime = LocalDateTime.now();
+        this.title = title;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -38,17 +42,32 @@ public class ToDo {
         this.content = content;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ToDo toDo = (ToDo) o;
-        return status == toDo.status && Objects.equals(id, toDo.id) && Objects.equals(title, toDo.title) && Objects.equals(content, toDo.content);
+        return Objects.equals(dateTime, toDo.dateTime) && Objects.equals(title, toDo.title) && Objects.equals(content, toDo.content) && status == toDo.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, status);
+        return Objects.hash(dateTime, title, content, status);
     }
 }
