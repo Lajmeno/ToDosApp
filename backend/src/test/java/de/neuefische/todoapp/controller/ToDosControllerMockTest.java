@@ -1,5 +1,6 @@
 package de.neuefische.todoapp.controller;
 
+
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.service.ToDosService;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ public class ToDosControllerMockTest {
 
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertEquals(toDo, response.getBody()[0]);
-        //assertTrue(response.getBody().length > 0);
     }
+
+
 }

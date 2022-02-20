@@ -1,13 +1,11 @@
 package de.neuefische.todoapp.controller;
 
-import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.service.ToDosService;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -36,6 +34,12 @@ public class ToDosController {
         String status = statusArray[0];
         LocalDateTime toDate = LocalDateTime.parse(date);
         toDosService.changeToDoStatus(toDate, status);
+    }
+
+    @PutMapping("/remove/{date}")
+    public void removeToDo(@PathVariable String date){
+        LocalDateTime toDate = LocalDateTime.parse(date);
+        toDosService.removeToDo(toDate);
     }
 
 

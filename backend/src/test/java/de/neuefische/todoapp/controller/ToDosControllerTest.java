@@ -1,5 +1,6 @@
 package de.neuefische.todoapp.controller;
 
+
 import de.neuefische.todoapp.model.ToDo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,19 @@ class ToDosControllerTest {
         assertEquals(toDo, response.getBody()[0]);
         //assertTrue(response.getBody().length > 0);
     }
+    /*
+    @Test
+    void expectToChangeStatusOf1ToDo(){
+        ToDo toDo = new ToDo();
+        toDo.setTitle("Rechnung Test");
+        restTemplate.postForEntity("/todos/add",toDo, ToDo[].class );
+        restTemplate.put("/todos/updatestatus/{date}", toDo.getDateTime());
+        ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
+        assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
+        //assertTrue(response.getBody().length > 0);
+    }
 
-
+     */
 
 
 

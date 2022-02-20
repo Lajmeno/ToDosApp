@@ -4,7 +4,6 @@ import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +26,11 @@ public class ToDosRepo {
         todos.stream().filter(ele -> ele.getDateTime().equals(date)).
                 findFirst().
                 ifPresent(ele ->ele.setStatus(toStatus));
+    }
+
+    public void removeToDoFromRepo(LocalDateTime date) {
+        todos.stream().filter(ele -> ele.getDateTime().equals(date)).
+                findFirst().
+                ifPresent(ele ->todos.remove(ele));
     }
 }

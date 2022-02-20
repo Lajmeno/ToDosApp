@@ -1,6 +1,5 @@
 package de.neuefische.todoapp.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,13 +13,11 @@ public class ToDo {
 
     public ToDo(){
         this.status = Status.WAITING;
-        //Instant now = Instant.now();
         this.dateTime = LocalDateTime.now();
     }
 
     public ToDo(String title){
         this.status = Status.WAITING;
-//        Instant now = Instant.now();
         this.dateTime = LocalDateTime.now();
         this.title = title;
     }
@@ -56,6 +53,16 @@ public class ToDo {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ToDo{" +
+                "dateTime=" + dateTime +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", status=" + status +
+                '}';
     }
 
     @Override
