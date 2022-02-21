@@ -23,14 +23,14 @@ public class ToDosRepo {
 
     public void changeToDoStatus(LocalDateTime date, String status) {
         Status toStatus = Status.valueOf(status);
-        todos.stream().filter(ele -> ele.getDateTime().equals(date)).
-                findFirst().
-                ifPresent(ele ->ele.setStatus(toStatus));
+        todos.stream().filter(ele -> ele.getDateTime().equals(date))
+                .findFirst()
+                .ifPresent(ele ->ele.setStatus(toStatus));
     }
 
     public void removeToDoFromRepo(LocalDateTime date) {
-        todos.stream().filter(ele -> ele.getDateTime().equals(date)).
-                findFirst().
-                ifPresent(ele ->todos.remove(ele));
+        todos.stream().filter(ele -> ele.getDateTime().equals(date))
+                .findFirst()
+                .ifPresent(ele ->todos.remove(ele));
     }
 }

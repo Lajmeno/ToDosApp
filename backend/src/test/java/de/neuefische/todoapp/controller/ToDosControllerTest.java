@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -23,22 +24,18 @@ class ToDosControllerTest {
         toDo.setTitle("Rechnung Test");
         restTemplate.postForEntity("/todos/add",toDo, ToDo[].class );
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
-        assertEquals(toDo, response.getBody()[0]);
+        assertThat(response.getBody()).contains(toDo);
     }
 
     @Test
     void expectToChangeStatusOf1ToDo(){
         ToDo toDo = new ToDo();
-        toDo.setTitle("Rechnung Test");
+        toDo.setTitle("Einkauf");
         restTemplate.postForEntity("/todos/add",toDo, ToDo[].class );
         String[] statusArray = {"INPROGRESS"};
         restTemplate.put("/todos/updatestatus/" + toDo.getDateTime(), statusArray);
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
     }
-
-
-
-
 
 }
