@@ -1,6 +1,7 @@
 package de.neuefische.todoapp.service;
 
 
+import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.repo.ToDosRepo;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,15 @@ public class ToDosService {
     }
 
     public void changeToDoStatus(LocalDateTime date, String status) {
-        toDosRepo.changeToDoStatus(date, status);
+        Status toStatus = Status.valueOf(status);
+        toDosRepo.getTodos().stream().filter(ele -> ele.getDateTime().equals(date))
+                .findFirst()
+                .ifPresent(ele ->ele.setStatus(toStatus));
     }
 
     public void removeToDo(LocalDateTime date) {
-        toDosRepo.removeToDoFromRepo(date);
+        toDosRepo.getTodos().stream().filter(ele -> ele.getDateTime().equals(date))
+                .findFirst()
+                .ifPresent(ele ->toDosRepo.getTodos().remove(ele));
     }
 }

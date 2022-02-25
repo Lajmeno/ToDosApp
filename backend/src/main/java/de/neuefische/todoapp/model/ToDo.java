@@ -1,10 +1,14 @@
 package de.neuefische.todoapp.model;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
 public class ToDo {
 
+    private String id;
     private LocalDateTime dateTime;
     private String title;
     private String content;
@@ -12,69 +16,13 @@ public class ToDo {
     private Status status;
 
     public ToDo(){
-        this.status = Status.WAITING;
-        this.dateTime = LocalDateTime.now();
+        this("");
     }
 
     public ToDo(String title){
+        this.id = UUID.randomUUID().toString();
         this.status = Status.WAITING;
         this.dateTime = LocalDateTime.now();
         this.title = title;
-    }
-
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "ToDo{" +
-                "dateTime=" + dateTime +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", status=" + status +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ToDo toDo = (ToDo) o;
-        return Objects.equals(dateTime, toDo.dateTime) && Objects.equals(title, toDo.title) && Objects.equals(content, toDo.content) && status == toDo.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(dateTime, title, content, status);
     }
 }
