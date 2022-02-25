@@ -1,10 +1,8 @@
 package de.neuefische.todoapp.repo;
 
-import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

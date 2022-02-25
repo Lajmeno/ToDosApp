@@ -30,10 +30,10 @@ public class ToDosController {
 
 
     @PutMapping("/{date}")
-    public void changeStatus(@PathVariable String date, @RequestBody String status){
+    public void changeStatus(@PathVariable String date, @RequestBody ToDo todo){
         //String status = statusArray[0];
         LocalDateTime toDate = LocalDateTime.parse(date);
-        toDosService.changeToDoStatus(toDate, status);
+        toDosService.changeToDoStatus(toDate, todo);
     }
 
     @DeleteMapping("/{date}")

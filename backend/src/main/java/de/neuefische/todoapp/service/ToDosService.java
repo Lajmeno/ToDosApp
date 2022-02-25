@@ -26,11 +26,10 @@ public class ToDosService {
         toDosRepo.addToDo(toDo);
     }
 
-    public void changeToDoStatus(LocalDateTime date, String status) {
-        Status toStatus = Status.valueOf(status);
+    public void changeToDoStatus(LocalDateTime date, ToDo todo) {
         toDosRepo.getTodos().stream().filter(ele -> ele.getDateTime().equals(date))
                 .findFirst()
-                .ifPresent(ele ->ele.setStatus(toStatus));
+                .ifPresent(ele ->ele.setStatus(todo.getStatus()));
     }
 
     public void removeToDo(LocalDateTime date) {

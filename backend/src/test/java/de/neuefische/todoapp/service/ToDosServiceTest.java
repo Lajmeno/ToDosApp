@@ -27,9 +27,13 @@ class ToDosServiceTest {
         ToDo toDo = new ToDo("Stromrechnung");
         repo.addToDo(toDo);
 
+        ToDo toDo2 = new ToDo("Stromrechnung");
+        toDo2.setStatus(Status.INPROGRESS);
+        repo.addToDo(toDo);
+
         ToDosService service = new ToDosService(repo);
 
-        service.changeToDoStatus(toDo.getDateTime(), "INPROGRESS");
+        service.changeToDoStatus(toDo.getDateTime(), toDo2);
 
         assertTrue(repo.getTodos().get(0).getStatus().equals(Status.INPROGRESS));
     }
