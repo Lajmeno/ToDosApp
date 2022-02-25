@@ -22,7 +22,7 @@ class ToDosControllerTest {
     void expectToGetOneToDo(){
         ToDo toDo = new ToDo();
         toDo.setTitle("Rechnung Test");
-        restTemplate.postForEntity("/todos/add",toDo, ToDo[].class );
+        restTemplate.postForEntity("/todos",toDo, ToDo[].class );
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertThat(response.getBody()).contains(toDo);
     }
@@ -31,9 +31,9 @@ class ToDosControllerTest {
     void expectToChangeStatusOf1ToDo(){
         ToDo toDo = new ToDo();
         toDo.setTitle("Einkauf");
-        restTemplate.postForEntity("/todos/add",toDo, ToDo[].class );
-        String[] statusArray = {"INPROGRESS"};
-        restTemplate.put("/todos/updatestatus/" + toDo.getDateTime(), statusArray);
+        restTemplate.postForEntity("/todos",toDo, ToDo[].class );
+        String status = "INPROGRESS";
+        restTemplate.put("/todos/" + toDo.getDateTime(), status);
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
     }

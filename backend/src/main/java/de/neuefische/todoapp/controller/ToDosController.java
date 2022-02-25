@@ -23,20 +23,20 @@ public class ToDosController {
         return toDosService.getTodos();
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public void addToDo(@RequestBody ToDo toDo){
         toDosService.addToDo(toDo);
     }
 
 
-    @PutMapping("/updatestatus/{date}")
-    public void changeStatus(@PathVariable String date, @RequestBody String[] statusArray){
-        String status = statusArray[0];
+    @PutMapping("/{date}")
+    public void changeStatus(@PathVariable String date, @RequestBody String status){
+        //String status = statusArray[0];
         LocalDateTime toDate = LocalDateTime.parse(date);
         toDosService.changeToDoStatus(toDate, status);
     }
 
-    @PutMapping("/remove/{date}")
+    @DeleteMapping("/{date}")
     public void removeToDo(@PathVariable String date){
         LocalDateTime toDate = LocalDateTime.parse(date);
         toDosService.removeToDo(toDate);
