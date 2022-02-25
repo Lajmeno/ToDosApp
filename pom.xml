@@ -8,10 +8,10 @@
 		<version>2.6.2</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.github.gossie</groupId>
-	<artifactId>spring-boot-react-bundle-parent</artifactId>
+	<groupId>com.github.lajmeno</groupId>
+	<artifactId>todos-app-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-react-bundle-parent</name>
+	<name>todos-app-parent</name>
 	<packaging>pom</packaging>
 	
 	<properties>
