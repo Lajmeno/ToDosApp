@@ -29,17 +29,14 @@ public class ToDosController {
     }
 
 
-    @PutMapping("/{date}")
-    public void changeStatus(@PathVariable String date, @RequestBody ToDo todo){
-        //String status = statusArray[0];
-        LocalDateTime toDate = LocalDateTime.parse(date);
-        toDosService.changeToDoStatus(toDate, todo);
+    @PutMapping("/{id}")
+    public void changeStatus(@PathVariable String id, @RequestBody ToDo todo){
+        toDosService.changeToDoStatus(id, todo);
     }
 
-    @DeleteMapping("/{date}")
-    public void removeToDo(@PathVariable String date){
-        LocalDateTime toDate = LocalDateTime.parse(date);
-        toDosService.removeToDo(toDate);
+    @DeleteMapping("/{id}")
+    public void removeToDo(@PathVariable String id){
+        toDosService.removeToDo(id);
     }
 
 

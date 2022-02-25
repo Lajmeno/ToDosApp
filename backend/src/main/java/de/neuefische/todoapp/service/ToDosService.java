@@ -26,14 +26,14 @@ public class ToDosService {
         toDosRepo.addToDo(toDo);
     }
 
-    public void changeToDoStatus(LocalDateTime date, ToDo todo) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getDateTime().equals(date))
+    public void changeToDoStatus(String id, ToDo todo) {
+        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
                 .ifPresent(ele ->ele.setStatus(todo.getStatus()));
     }
 
-    public void removeToDo(LocalDateTime date) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getDateTime().equals(date))
+    public void removeToDo(String id) {
+        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
                 .ifPresent(ele ->toDosRepo.getTodos().remove(ele));
     }

@@ -35,7 +35,7 @@ class ToDosControllerTest {
         toDo2.setStatus(Status.INPROGRESS);
         restTemplate.postForEntity("/todos", toDo, ToDo[].class );
         String status = "INPROGRESS";
-        restTemplate.put("/todos/" + toDo.getDateTime(), toDo2);
+        restTemplate.put("/todos/" + toDo.getId(), toDo2);
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
     }

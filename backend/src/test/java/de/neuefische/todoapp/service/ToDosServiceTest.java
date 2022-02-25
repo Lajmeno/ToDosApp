@@ -33,7 +33,7 @@ class ToDosServiceTest {
 
         ToDosService service = new ToDosService(repo);
 
-        service.changeToDoStatus(toDo.getDateTime(), toDo2);
+        service.changeToDoStatus(toDo.getId(), toDo2);
 
         assertTrue(repo.getTodos().get(0).getStatus().equals(Status.INPROGRESS));
     }
@@ -47,7 +47,7 @@ class ToDosServiceTest {
         repo.addToDo(toDo2);
 
         ToDosService service = new ToDosService(repo);
-        service.removeToDo(toDo1.getDateTime());
+        service.removeToDo(toDo1.getId());
 
         assertEquals(List.of(toDo2), service.getTodos());
     }
