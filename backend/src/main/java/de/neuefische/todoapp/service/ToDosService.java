@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -19,6 +22,7 @@ public class ToDosService {
     }
 
     public List<ToDo> getTodos() {
+        toDosRepo.getTodos().sort(Comparator.comparing(item -> item.getStatus()));
         return toDosRepo.getTodos();
     }
 
