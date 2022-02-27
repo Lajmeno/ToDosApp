@@ -1,7 +1,6 @@
 import { ToDoModel } from "./TodoModel";
 
 import './ToDo.css';
-import { useEffect, useState } from "react";
 
 interface ToDoModelProps {
     item: ToDoModel;
@@ -9,13 +8,6 @@ interface ToDoModelProps {
 }
 
 export default function ToDo(props:ToDoModelProps){
-
-
-    //const [id, setId] = useState("");
-
-    useEffect(() => {
-        
-    }, []);
 
     const deleteToDo = (id:string) => {
         if(id.length > 0){
