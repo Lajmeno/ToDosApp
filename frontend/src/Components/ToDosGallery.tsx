@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { isTemplateExpression } from "typescript";
 import ToDo from "./ToDo";
 import { ToDoModel } from "./TodoModel";
 
@@ -24,9 +23,9 @@ export default function ToDosGallery() {
         title : newToDo
     }
 
-    const addToDo = (newToDo:string) => {
+    const addToDo = () => {
         fetch("http://localhost:5000/todos", {
-        method: "post", 
+        method: "POST", 
         body: JSON.stringify(requestBody),
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +39,7 @@ export default function ToDosGallery() {
         <div className="main">
             <div className="addToDo">
                 <input placeholder="Enter Title" value={newToDo} onChange= {v => setNewTodo(v.target.value)}></input>
-                <button onClick={() => addToDo(newToDo)}>add</button>
+                <button onClick={() => addToDo()}>add</button>
             </div>
             <div className="toDos">
                 {
