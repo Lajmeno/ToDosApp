@@ -19,11 +19,13 @@ export default function ToDosGallery() {
         .then(responseBody => setToDos(responseBody))
     },[]);
 
-    const requestBody = {
-        title : newToDo
-    }
 
     const addToDo = () => {
+        
+        const requestBody = {
+            title : newToDo
+        }
+
         fetch("http://localhost:5000/todos", {
         method: "POST", 
         body: JSON.stringify(requestBody),

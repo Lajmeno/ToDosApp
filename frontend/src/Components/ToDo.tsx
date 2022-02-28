@@ -19,16 +19,14 @@ export default function ToDo(props:ToDoModelProps){
     }
 
     const changeStatus = (id:string, changedStatus:string) => {
-        if(id.length > 0){
-            fetch(`http://localhost:5000/todos/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({status:changedStatus}),
-            headers: {
-                'Content-Type': 'application/json',
-            }})
-            .then(response => response.json())
-            .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
-        }
+        fetch(`http://localhost:5000/todos/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({status:changedStatus}),
+        headers: {
+            'Content-Type': 'application/json',
+        }})
+        .then(response => response.json())
+        .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
     }
 
     return(
