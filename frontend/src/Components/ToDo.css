@@ -15,7 +15,12 @@
 
 .toDoContent {
     grid-area: 2 / 1 / 2 /2;
+    height : 40px;
+}
 
+.toDoContentHidden {
+    grid-area: 2 / 1 / 2 /2;
+    display: none;
 }
 
 .toDoStatus{

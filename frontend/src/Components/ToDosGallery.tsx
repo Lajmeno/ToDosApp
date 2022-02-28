@@ -10,7 +10,7 @@ import './ToDosGallery.css';
 export default function ToDosGallery() {
 
     const [toDos, setToDos] = useState([] as Array<ToDoModel>);
-    const [newToDo, setNewTodo] = useState("");
+    const [newToDo, setNewTodo] = useState({title: "", content: ""});
 
 
     useEffect(() => {
@@ -21,9 +21,10 @@ export default function ToDosGallery() {
 
 
     const addToDo = () => {
-        
+
         const requestBody = {
-            title : newToDo
+            title : newToDo.title,
+            content : newToDo.content
         }
 
         fetch("http://localhost:5000/todos", {
@@ -40,7 +41,8 @@ export default function ToDosGallery() {
     return( 
         <div className="main">
             <div className="addToDo">
-                <input placeholder="Enter Title" value={newToDo} onChange= {v => setNewTodo(v.target.value)}></input>
+                <input placeholder="Title" value={newToDo.title} onChange= {v => setNewTodo((prevState) => ({content: prevState.content, title :v.target.value}))}></input>
+                <input placeholder="Description" value={newToDo.content} onChange= {v => setNewTodo((prevState) => ({title: prevState.title, content :v.target.value}))}></input>
                 <button onClick={() => addToDo()}>add</button>
             </div>
             <div className="toDos">

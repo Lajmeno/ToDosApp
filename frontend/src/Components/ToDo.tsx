@@ -1,6 +1,7 @@
 import { ToDoModel } from "./TodoModel";
 
 import './ToDo.css';
+import { useState } from "react";
 
 interface ToDoModelProps {
     item: ToDoModel;
@@ -8,6 +9,8 @@ interface ToDoModelProps {
 }
 
 export default function ToDo(props:ToDoModelProps){
+
+    const [clicked, setClicked] = useState(false);
 
     const deleteToDo = (id:string) => {
         if(id.length > 0){
@@ -30,10 +33,10 @@ export default function ToDo(props:ToDoModelProps){
     }
 
     return(
-        <div className="toDo">
+        <div onClick={() => clicked === false ? setClicked(true) : setClicked(false)} className="toDo">
             <div className="toDoTitle"> {props.item.title} </div>
             <div className="toDoDate"> {props.item.dateTime} </div>
-            <div className="toDoContent"> {props.item.content} </div>
+            <div className={clicked === false ? "toDoContentHidden" : "toDoContent" }> {props.item.content} </div>
             <div className="toDoStatus"> {props.item.status} </div>
             <div className="toDoButtons">
             <button className="inprogressButton" onClick={() => changeStatus(props.item.id, "INPROGRESS")}>INPROGRESS</button>
