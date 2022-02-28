@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/todos")
 @CrossOrigin
-public class git ToDosController {
+public class ToDosController {
 
     private ToDosService toDosService;
 
