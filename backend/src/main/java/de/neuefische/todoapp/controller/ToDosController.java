@@ -5,11 +5,11 @@ import de.neuefische.todoapp.service.ToDosService;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/todos")
+@CrossOrigin
 public class ToDosController {
 
     private ToDosService toDosService;
@@ -24,19 +24,22 @@ public class ToDosController {
     }
 
     @PostMapping()
-    public void addToDo(@RequestBody ToDo toDo){
+    public List<ToDo> addToDo(@RequestBody ToDo toDo){
         toDosService.addToDo(toDo);
+        return toDosService.getTodos();
     }
 
 
     @PutMapping("/{id}")
-    public void changeStatus(@PathVariable String id, @RequestBody ToDo todo){
+    public List<ToDo> changeStatus(@PathVariable String id, @RequestBody ToDo todo){
         toDosService.changeToDoStatus(id, todo);
+        return toDosService.getTodos();
     }
 
     @DeleteMapping("/{id}")
-    public void removeToDo(@PathVariable String id){
+    public List<ToDo> removeToDo(@PathVariable String id){
         toDosService.removeToDo(id);
+        return toDosService.getTodos();
     }
 
 
