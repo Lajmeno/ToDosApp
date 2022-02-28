@@ -10,7 +10,7 @@ interface ToDoModelProps {
 
 export default function ToDo(props:ToDoModelProps){
 
-    const [clicked, setClicked] = useState(false);
+    const [expand, setExpand] = useState(false);
 
     const deleteToDo = (id:string) => {
         if(id.length > 0){
@@ -21,7 +21,11 @@ export default function ToDo(props:ToDoModelProps){
         }
     }
 
-    const changeStatus = (id:string, changedStatus:string) => {
+    const changeStatus = (id:string, changedStatus?:string) => {
+
+        if(changedStatus === undefined){
+            props.item.status === "WAITING" ? changedStatus = "INPROGRESS" : changedStatus = "WAITING";
+        }
         fetch(`http://localhost:5000/todos/${id}`, {
         method: "PUT",
         body: JSON.stringify({status:changedStatus}),
@@ -33,17 +37,15 @@ export default function ToDo(props:ToDoModelProps){
     }
 
     return(
-        <div onClick={() => clicked === false ? setClicked(true) : setClicked(false)} className="toDo">
-            <div className="toDoTitle"> {props.item.title} </div>
+        <div className="toDo">
+            <div onClick={() => expand === false ? setExpand(true) : setExpand(false)} className="toDoTitle"> {props.item.title} </div>
             <div className="toDoDate"> {props.item.dateTime} </div>
-            <div className={clicked === false ? "toDoContentHidden" : "toDoContent" }> {props.item.content} </div>
-            <div className="toDoStatus"> {props.item.status} </div>
-            <div className="toDoButtons">
-            <button className="inprogressButton" onClick={() => changeStatus(props.item.id, "INPROGRESS")}>INPROGRESS</button>
-            <button className="doneButton" onClick={() => changeStatus(props.item.id, "DONE")}>DONE</button>
+            <div className={expand === false ? "toDoContentHidden" : "toDoContent" }> {props.item.content} </div>
+            <div className={props.item.status === "WAITING" ? "toDoStatusWaiting" : (props.item.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")} onClick={() => changeStatus(props.item.id)}> {props.item.status} </div>
+            <div className="toDoButtons" >
+                <button className="doneButton" onClick={() => changeStatus(props.item.id, "DONE")}>DONE</button>
                 <button className="deleteButton" onClick={() => deleteToDo(props.item.id)}>delete</button>
             </div>
-            
         </div>
     )
 }

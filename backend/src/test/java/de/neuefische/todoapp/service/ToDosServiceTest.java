@@ -52,4 +52,22 @@ class ToDosServiceTest {
         assertEquals(List.of(toDo2), service.getTodos());
     }
 
+    @Test
+    void expectsToRemoveAllDoneToDos(){
+        ToDosRepo repo = new ToDosRepo();
+        ToDo toDo1 = new ToDo("Stromrechnung");
+        ToDo toDo2 = new ToDo("Einkauf");
+        ToDo toDo3 = new ToDo("Never Done");
+        toDo1.setStatus(Status.DONE);
+        toDo2.setStatus(Status.DONE);
+        repo.addToDo(toDo1);
+        repo.addToDo(toDo2);
+        repo.addToDo(toDo3);
+
+        ToDosService service = new ToDosService(repo);
+        service.removeDoneToDos();
+
+        assertEquals(List.of(toDo3), service.getTodos());
+    }
+
 }

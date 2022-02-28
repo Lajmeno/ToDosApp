@@ -1,6 +1,7 @@
 package de.neuefische.todoapp.service;
 
 
+import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.repo.ToDosRepo;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,13 @@ public class ToDosService {
         toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
                 .ifPresent(ele ->toDosRepo.getTodos().remove(ele));
+    }
+
+    public void removeDoneToDos() {
+        var list = toDosRepo.getTodos().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
+                .toList();
+        for (ToDo toDo: list) {
+            toDosRepo.getTodos().remove(toDo);
+        }
     }
 }

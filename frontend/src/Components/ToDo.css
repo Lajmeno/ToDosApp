@@ -1,12 +1,13 @@
 .toDo{
     display: grid;
-    grid-template-columns: 30% 20% 20% 30%;
+    grid-template-columns: 50% 20% 20% 10%;
     grid-template-rows: 40% 60%;
     border-style: solid;
 }
 
 .toDoTitle{
     grid-area: 1 / 1 / 1 / 1;
+    min-height: 25px;
 }
 
 .toDoDate {
@@ -15,7 +16,7 @@
 
 .toDoContent {
     grid-area: 2 / 1 / 2 /2;
-    height : 40px;
+    min-height : 40px;
 }
 
 .toDoContentHidden {
@@ -23,18 +24,38 @@
     display: none;
 }
 
-.toDoStatus{
+.toDoStatusWaiting{
     grid-area: 1 / 3 / 3 /3;
     align-self: center;
+    border: 0.3rem outset rgb(175, 233, 170);
+}
+.toDoStatusInprogress{
+    grid-area: 1 / 3 / 3 /3;
+    align-self: center;
+    border: 0.3rem outset rgb(216, 174, 83);
+}
+.toDoStatusDone{
+    grid-area: 1 / 3 / 3 /3;
+    align-self: center;
+    border: 0.3rem outset rgb(157, 201, 221);
 }
 
 .toDoButtons{
-    grid-area: 1 / 4 / 3 /4;
+    grid-area: 1 / 4 / 3 /5;
     display: grid;
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 50% 50%;
 }
 
 .deleteButton{
-    grid-area: 1 / 4 / 3 /4;
-    grid-area: 1 / 3 / 1 / 4;
+    grid-area: 1 / 2 / 1 / 2;
+    max-width: 60px;
+    max-height: 45px;
+    align-self: center;
+}
+
+.doneButton{
+    grid-area: 1 / 1 / 1 / 1;
+    max-width: 60px;
+    max-height: 45px;
+    align-self: center;
 }

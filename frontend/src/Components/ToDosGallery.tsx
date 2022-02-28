@@ -37,6 +37,12 @@ export default function ToDosGallery() {
         .then(responseBody => setToDos(responseBody))
     };
 
+    const deleteDoneToDos = () => {
+        fetch(`http://localhost:5000/todos`, {
+        method: "DELETE"})
+        .then(response => response.json())
+        .then(responseBody => setToDos(responseBody));
+    }
 
     return( 
         <div className="main">
@@ -44,6 +50,9 @@ export default function ToDosGallery() {
                 <input placeholder="Title" value={newToDo.title} onChange= {v => setNewTodo((prevState) => ({content: prevState.content, title :v.target.value}))}></input>
                 <input placeholder="Description" value={newToDo.content} onChange= {v => setNewTodo((prevState) => ({title: prevState.title, content :v.target.value}))}></input>
                 <button onClick={() => addToDo()}>add</button>
+            </div>
+            <div className="deleteDoneButton">
+                <button onClick={() => deleteDoneToDos()}>Delete Done ToDos</button>
             </div>
             <div className="toDos">
                 {

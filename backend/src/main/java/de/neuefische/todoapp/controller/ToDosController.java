@@ -29,7 +29,6 @@ public class ToDosController {
         return toDosService.getTodos();
     }
 
-
     @PutMapping("/{id}")
     public List<ToDo> changeStatus(@PathVariable String id, @RequestBody ToDo todo){
         toDosService.changeToDoStatus(id, todo);
@@ -39,6 +38,12 @@ public class ToDosController {
     @DeleteMapping("/{id}")
     public List<ToDo> removeToDo(@PathVariable String id){
         toDosService.removeToDo(id);
+        return toDosService.getTodos();
+    }
+
+    @DeleteMapping()
+    public List<ToDo> removeAllDoneToDos(){
+        toDosService.removeDoneToDos();
         return toDosService.getTodos();
     }
 
