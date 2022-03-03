@@ -13,12 +13,10 @@ export default function ToDo(props:ToDoModelProps){
     const [expand, setExpand] = useState(false);
 
     const deleteToDo = (id:string) => {
-        if(id.length > 0){
-            fetch(`http://localhost:5000/todos/${id}`, {
-            method: "DELETE"})
-            .then(response => response.json())
-            .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
-        }
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${id}`, {
+        method: "DELETE"})
+        .then(response => response.json())
+        .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
     }
 
     const changeStatus = (id:string, changedStatus?:string) => {
@@ -26,7 +24,7 @@ export default function ToDo(props:ToDoModelProps){
         if(changedStatus === undefined){
             props.item.status === "WAITING" ? changedStatus = "INPROGRESS" : changedStatus = "WAITING";
         }
-        fetch(`http://localhost:5000/todos/${id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${id}`, {
         method: "PUT",
         body: JSON.stringify({status:changedStatus}),
         headers: {
@@ -37,15 +35,18 @@ export default function ToDo(props:ToDoModelProps){
     }
 
     return(
-        <div className="toDo">
-            <div onClick={() => expand === false ? setExpand(true) : setExpand(false)} className="toDoTitle"> {props.item.title} </div>
-            <div className="toDoDate"> {props.item.dateTime} </div>
-            <div className={expand === false ? "toDoContentHidden" : "toDoContent" }> {props.item.content} </div>
+        <div>
+        <div className="columns is-mobile">
+            <div onClick={() => expand === false ? setExpand(true) : setExpand(false)} className="column is-one-quarter"> {props.item.title} </div>
+            <div className="column is-one-quarter"> {props.item.dateTime} </div>
             <div className={props.item.status === "WAITING" ? "toDoStatusWaiting" : (props.item.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")} onClick={() => changeStatus(props.item.id)}> {props.item.status} </div>
-            <div className="toDoButtons" >
-                <button className="doneButton" onClick={() => changeStatus(props.item.id, "DONE")}>DONE</button>
-                <button className="deleteButton" onClick={() => deleteToDo(props.item.id)}>delete</button>
-            </div>
+            <div className="column is-one-quarter" >
+                <button className="button" onClick={() => changeStatus(props.item.id, "DONE")}>DONE</button>
+                <button className="button" onClick={() => deleteToDo(props.item.id)}>delete</button>
+             </div>
+             </div>
+             
+            <div className={expand === false ? "toDoContentHidden" : "columns is mobile" }> {props.item.content} </div>
         </div>
     )
 }

@@ -5,8 +5,6 @@ import { ToDoModel } from "./TodoModel";
 import './ToDosGallery.css';
 
 
-
-
 export default function ToDosGallery() {
 
     const [toDos, setToDos] = useState([] as Array<ToDoModel>);
@@ -14,7 +12,7 @@ export default function ToDosGallery() {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/todos")
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`)
         .then(response => response.json())
         .then(responseBody => setToDos(responseBody))
     },[]);
@@ -27,7 +25,7 @@ export default function ToDosGallery() {
             content : newToDo.content
         }
 
-        fetch("http://localhost:5000/todos", {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
         method: "POST", 
         body: JSON.stringify(requestBody),
         headers: {
@@ -38,7 +36,7 @@ export default function ToDosGallery() {
     };
 
     const deleteDoneToDos = () => {
-        fetch(`http://localhost:5000/todos`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
         method: "DELETE"})
         .then(response => response.json())
         .then(responseBody => setToDos(responseBody));
