@@ -1,5 +1,4 @@
 import { ToDoModel } from "./TodoModel";
-
 import './ToDo.css';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
