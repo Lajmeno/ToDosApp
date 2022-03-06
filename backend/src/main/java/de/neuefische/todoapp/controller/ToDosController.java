@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todos")
@@ -21,6 +22,11 @@ public class ToDosController {
     @GetMapping
     public List<ToDo> getAllToDos(){
         return toDosService.getTodos();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<ToDo> getToDoById(@PathVariable String id){
+        return toDosService.getOneToDO(id);
     }
 
     @PostMapping()
