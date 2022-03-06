@@ -1,4 +1,5 @@
-@import '../node_modules/bulma/css/bulma.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 body {
   margin: 0;

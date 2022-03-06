@@ -3,6 +3,7 @@ import './ToDo.css';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
 
 interface ToDoModelProps {
     item: ToDoModel;
@@ -11,7 +12,6 @@ interface ToDoModelProps {
 
 export default function ToDo(props:ToDoModelProps){
 
-    const [expand, setExpand] = useState(false);
 
     const [changedStatus, setChangedStatus] = useState(props.item.status);
 
@@ -48,17 +48,15 @@ export default function ToDo(props:ToDoModelProps){
 
 
     return(
-        <div>
-        <div className="columns is-mobile">
-            <Link to={`${props.item.id}`}><div /*onClick={() => expand === false ? setExpand(true) : setExpand(false)}*/ className="column is-one-quarter"> {props.item.title} </div></Link>
-            <div className="column is-one-quarter"> {props.item.dateTime} </div>
-            <div className={props.item.status === "WAITING" ? "toDoStatusWaiting" : (props.item.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")} onClick={() => changeStatus()}> {t(changedStatus)} </div>
-            <div className="column is-one-quarter" >
-                <button className="button" onClick={() => deleteToDo()}>delete</button>
-             </div>
-             </div>
-             
-            <div className={expand === false ? "toDoContentHidden" : "columns is mobile" }> {props.item.content} </div>
+        <div className="toDoInList">
+            <Row >
+                <Col><Link to={`${props.item.id}`}><div className="column is-one-quarter"> {props.item.title} </div></Link></Col>
+                <Col md="auto"><div className="column is-one-quarter"> {props.item.dateTime} </div></Col>
+                <Col xs={5} lg="2"><div className={props.item.status === "WAITING" ? "toDoStatusWaiting" : (props.item.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")} onClick={() => changeStatus()}> {t(changedStatus)} </div></Col>
+                <Col xs={5} lg="2" >
+                    <Button  onClick={() => deleteToDo()}>delete</Button>
+                </Col>
+            </Row>
         </div>
     )
 }

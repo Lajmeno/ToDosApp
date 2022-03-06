@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Button, Col, Container, FormControl, InputGroup, Row, ThemeProvider } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ToDo from "./ToDo";
 import { ToDoModel } from "./TodoModel";
@@ -53,22 +54,39 @@ export default function ToDosGallery() {
     }
 
     return( 
-        <div className="main">
-            <div className="addToDo">
-                <input placeholder="Title" value={newToDo.title} onChange= {v => setNewTodo((prevState) => ({content: prevState.content, title :v.target.value}))}></input>
-                <input placeholder="Description" value={newToDo.content} onChange= {v => setNewTodo((prevState) => ({title: prevState.title, content :v.target.value}))}></input>
-                <button onClick={() => addToDo()}>{t('addButton')}</button>
-            </div>
-            <div className="deleteDoneButton">
-                <button onClick={() => deleteDoneToDos()}>{t('deleteDoneTodosButton')}</button>
-            </div>
-            <div className="toDos" data-testid="todos">
-                {
-                toDos
-                .map(item => <ToDo key={item.id} item={item} onItemChange = {setToDos}/>)
-                }
-                <div>{errorMessage}</div>
-            </div>
-        </div>
+        <ThemeProvider breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']} >
+            <Container fluid>
+                <Row className="justify-content-md-center" >
+                    <InputGroup className="mb-3">
+                        <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
+                        <FormControl placeholder="Please write ToDo title here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.title} onChange= {v => setNewTodo((prevState) => ({content: prevState.content, title :v.target.value}))}/>
+                    </InputGroup>
+                </Row>
+                <Row className="justify-content-md-center" >
+                    <InputGroup className="mb-3">
+                        <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
+                        <FormControl placeholder="Please write Description here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.content} onChange= {v => setNewTodo((prevState) => ({title: prevState.title, content :v.target.value}))}/>
+                    </InputGroup>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col md="auto"><Button onClick={() => addToDo()}>{t('addButton')}</Button></Col>
+                    <Col md="auto"> <Button onClick={() => deleteDoneToDos()}>{t('deleteDoneTodosButton')}</Button></Col>
+                    <Row  >
+                       
+                        
+                    </Row>
+                </Row>
+                <Row>
+                    
+                    <div className="toDos" data-testid="todos">
+                        {
+                        toDos
+                        .map(item => <ToDo key={item.id} item={item} onItemChange = {setToDos}/>)
+                        }
+                        <div>{errorMessage}</div>
+                    </div>
+                </Row>
+            </Container>
+            </ThemeProvider>
     );
 }
