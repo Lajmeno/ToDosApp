@@ -15,7 +15,6 @@ export default function ToDoDetails(){
     const[errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        //setErrorMessage("");
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${param.id}`)
         .then(response => {return response.json()})
         .then(responseBody  => {
@@ -26,7 +25,7 @@ export default function ToDoDetails(){
          })
         .then(responseBody => setToDo(responseBody))
         .catch((e:Error) => {setErrorMessage(e.message)})
-    },[]);
+    },[param.id]);
     
     return (
         <div>
