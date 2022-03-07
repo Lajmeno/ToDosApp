@@ -10,7 +10,7 @@ import './ToDosGallery.css';
 export default function ToDosGallery() {
 
     const [toDos, setToDos] = useState([] as Array<ToDoModel>);
-    const [newToDo, setNewTodo] = useState({title: "", content: ""});
+    const [newToDo, setNewTodo] = useState({title: localStorage.getItem("title")?? "", description: localStorage.getItem("description")?? ""});
 
     const {t} = useTranslation();
     
@@ -33,7 +33,7 @@ export default function ToDosGallery() {
 
         const requestBody = {
             title : newToDo.title,
-            content : newToDo.content
+            content : newToDo.description
         }
 
         fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
@@ -59,13 +59,13 @@ export default function ToDosGallery() {
                 <Row className="justify-content-md-center" >
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
-                        <FormControl placeholder="Please write ToDo title here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.title} onChange= {v => setNewTodo((prevState) => ({content: prevState.content, title :v.target.value}))}/>
+                        <FormControl placeholder="Please write ToDo title here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.title} onChange= {v => {setNewTodo((prevState) => ({description: prevState.description, title :v.target.value})) ; localStorage.setItem("title",v.target.value)}}/>
                     </InputGroup>
                 </Row>
                 <Row className="justify-content-md-center" >
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
-                        <FormControl placeholder="Please write Description here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.content} onChange= {v => setNewTodo((prevState) => ({title: prevState.title, content :v.target.value}))}/>
+                        <FormControl placeholder="Please write Description here" aria-label="Username" aria-describedby="basic-addon1" value={newToDo.description} onChange= {v => {setNewTodo((prevState) => ({title: prevState.title, description :v.target.value})) ; localStorage.setItem("description",v.target.value)}}/>
                     </InputGroup>
                 </Row>
                 <Row className="justify-content-md-center">

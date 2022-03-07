@@ -3,8 +3,6 @@ package de.neuefische.todoapp.controller;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.service.ToDosService;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 import java.util.Optional;
 
