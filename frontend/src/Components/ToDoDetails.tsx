@@ -15,12 +15,14 @@ export default function ToDoDetails(){
     const[errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
+        //setErrorMessage("");
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${param.id}`)
-        .then(response => {
-            if(response.ok){
-                return response.json()
+        .then(response => {return response.json()})
+        .then(responseBody  => {
+            if(responseBody){
+                return responseBody;   
             }
-            throw new Error("Could notrequested Todo from Backend");
+            throw new Error("There is no ToDo with the requested id");
          })
         .then(responseBody => setToDo(responseBody))
         .catch((e:Error) => {setErrorMessage(e.message)})
@@ -28,7 +30,7 @@ export default function ToDoDetails(){
     
     return (
         <div>
-            <div>{errorMessage}</div>
+            {errorMessage && <div>{errorMessage}</div>}
 
             <Row >
                 <Col><div className="column is-one-quarter"> {toDo.title} </div></Col>
