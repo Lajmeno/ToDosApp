@@ -1,0 +1,7 @@
+{
+    "deleteDoneTodosButton" : "Lösche alle fertigen ToDos",
+    "addButton" : "Hinzufügen",
+    "DONE" : "Fertig",
+    "INPROGRESS" : "In Bearbeitung",
+    "WAITING" : "Wartend"
+}

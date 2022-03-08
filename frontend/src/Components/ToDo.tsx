@@ -1,6 +1,9 @@
 import { ToDoModel } from "./TodoModel";
-
 import './ToDo.css';
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
 
 interface ToDoModelProps {
     item: ToDoModel;
@@ -9,19 +12,33 @@ interface ToDoModelProps {
 
 export default function ToDo(props:ToDoModelProps){
 
-    const deleteToDo = (id:string) => {
-        if(id.length > 0){
-            fetch(`http://localhost:5000/todos/${id}`, {
-            method: "DELETE"})
-            .then(response => response.json())
-            .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
-        }
+
+    const [changedStatus, setChangedStatus] = useState(props.item.status);
+
+    const{t} = useTranslation();
+
+    const deleteToDo = () => {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.item.id}`, {
+        method: "DELETE"})
+        .then(response => response.json())
+        .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
     }
 
-    const changeStatus = (id:string, changedStatus:string) => {
-        fetch(`http://localhost:5000/todos/${id}`, {
+    const switchStatus = () => {
+        if(changedStatus === "WAITING"){
+            return "INPROGRESS";
+        }else if (changedStatus === "INPROGRESS"){
+            return "DONE";
+        }
+        return 'WAITING';
+    }
+
+    const changeStatus = () => {
+        const newStatus = switchStatus();
+        setChangedStatus(newStatus);
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.item.id}`, {
         method: "PUT",
-        body: JSON.stringify({status:changedStatus}),
+        body: JSON.stringify({status:newStatus}),
         headers: {
             'Content-Type': 'application/json',
         }})
@@ -29,18 +46,17 @@ export default function ToDo(props:ToDoModelProps){
         .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
     }
 
+
     return(
-        <div className="toDo">
-            <div className="toDoTitle"> {props.item.title} </div>
-            <div className="toDoDate"> {props.item.dateTime} </div>
-            <div className="toDoContent"> {props.item.content} </div>
-            <div className="toDoStatus"> {props.item.status} </div>
-            <div className="toDoButtons">
-            <button className="inprogressButton" onClick={() => changeStatus(props.item.id, "INPROGRESS")}>INPROGRESS</button>
-            <button className="doneButton" onClick={() => changeStatus(props.item.id, "DONE")}>DONE</button>
-                <button className="deleteButton" onClick={() => deleteToDo(props.item.id)}>delete</button>
-            </div>
-            
+        <div className="toDoInList">
+            <Row >
+                <Col><Link to={`${props.item.id}`}><div className="column is-one-quarter"> {props.item.title} </div></Link></Col>
+                <Col md="auto"><div className="column is-one-quarter"> {props.item.dateTime} </div></Col>
+                <Col xs={5} lg="2"><div className={props.item.status === "WAITING" ? "toDoStatusWaiting" : (props.item.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")} onClick={() => changeStatus()}> {t(changedStatus)} </div></Col>
+                <Col xs={5} lg="2" >
+                    <Button  onClick={() => deleteToDo()}>delete</Button>
+                </Col>
+            </Row>
         </div>
     )
 }

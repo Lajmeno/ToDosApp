@@ -1,0 +1,7 @@
+{
+    "deleteDoneTodosButton" : "Delete all done ToDos",
+    "addButton" : "Add",
+    "DONE" : "Done",
+    "INPROGRESS" : "In progress",
+    "WAITING" : "Waits"
+}

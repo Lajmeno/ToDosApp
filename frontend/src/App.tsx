@@ -1,12 +1,16 @@
-
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import ToDosGallery from './Components/ToDosGallery';
+import Header from './Components/Header';
 
 function App() {
   return (
+    <Suspense fallback="loading..">
+     < Header />
     <div className="App">
-      <ToDosGallery/>
+      <Outlet/>
     </div>
+    </Suspense>
   );
 }
 
