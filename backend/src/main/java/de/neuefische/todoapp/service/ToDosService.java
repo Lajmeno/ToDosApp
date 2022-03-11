@@ -20,36 +20,36 @@ public class ToDosService {
     }
 
     public List<ToDo> getTodos() {
-        toDosRepo.getTodos().sort(Comparator.comparing(item -> item.getStatus()));
-        return toDosRepo.getTodos();
+        toDosRepo.findAllByOrderBOrderByStatus();
+        return toDosRepo.findAll();
     }
 
     public void addToDo(ToDo toDo) {
-        toDosRepo.addToDo(toDo);
+        toDosRepo.save(toDo);
     }
 
     public void changeToDoStatus(String id, ToDo todo) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
+        toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
                 .ifPresent(ele ->ele.setStatus(todo.getStatus()));
     }
 
     public void removeToDo(String id) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
+        toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
-                .ifPresent(ele ->toDosRepo.getTodos().remove(ele));
+                .ifPresent(ele ->toDosRepo.delete(ele));
     }
 
     public void removeDoneToDos() {
-        var list = toDosRepo.getTodos().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
+        var list = toDosRepo.findAll().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
                 .toList();
         for (ToDo toDo: list) {
-            toDosRepo.getTodos().remove(toDo);
+            toDosRepo.findAll().remove(toDo);
         }
     }
 
     public Optional<ToDo> getOneToDO(String id) {
-        return toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
+        return toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst();
     }
 }

@@ -1,11 +1,13 @@
 package de.neuefische.todoapp.model;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Document("toDos")
 @Data
 public class ToDo {
 
@@ -27,7 +29,6 @@ public class ToDo {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formatDateTime = now.format(formatter);
         this.dateTime = now.format(formatter);
     }
 }
