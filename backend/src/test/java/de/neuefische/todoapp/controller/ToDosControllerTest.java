@@ -3,6 +3,7 @@ package de.neuefische.todoapp.controller;
 
 import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,15 +29,16 @@ class ToDosControllerTest {
     }
 
     @Test
+    @Disabled
     void expectToChangeStatusOf1ToDo(){
         ToDo toDo = new ToDo();
         toDo.setTitle("Einkauf");
         ToDo toDo2 = new ToDo("Pizza");
         toDo2.setStatus(Status.INPROGRESS);
         restTemplate.postForEntity("/todos", toDo, ToDo[].class );
-        String status = "INPROGRESS";
         restTemplate.put("/todos/" + toDo.getId(), toDo2);
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
+
         assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
     }
 

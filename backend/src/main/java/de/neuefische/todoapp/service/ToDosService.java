@@ -28,9 +28,6 @@ public class ToDosService {
     }
 
     public void changeToDoStatus(String id, ToDo toDo) {
-        ToDo todo1 = toDosRepo.findById(id).get();
-        todo1.setStatus(Status.DONE);
-
 
         toDosRepo.findById(id)
                 .map(t ->t.patch(toDo))
@@ -47,7 +44,7 @@ public class ToDosService {
         var list = toDosRepo.findAll().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
                 .toList();
         for (ToDo toDo: list) {
-            toDosRepo.findAll().remove(toDo);
+            toDosRepo.delete(toDo);
         }
     }
 

@@ -37,7 +37,7 @@ export default function ToDo(props:ToDoModelProps){
         const newStatus = switchStatus();
         setChangedStatus(newStatus);
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.item.id}`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify({status:newStatus}),
         headers: {
             'Content-Type': 'application/json',

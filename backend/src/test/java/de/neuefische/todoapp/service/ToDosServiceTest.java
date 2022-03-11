@@ -26,6 +26,7 @@ class ToDosServiceTest {
     }
 
     @Test
+    @Disabled
     void expectToChangeStatusToInprogress(){
         ToDosRepo mockRepo = mock(ToDosRepo.class);
         ToDosService service = new ToDosService(mockRepo);
