@@ -11,7 +11,7 @@ import java.util.Optional;
 @CrossOrigin
 public class ToDosController {
 
-    private ToDosService toDosService;
+    private final ToDosService toDosService;
 
     public ToDosController(ToDosService toDosService) {
         this.toDosService = toDosService;
@@ -33,8 +33,8 @@ public class ToDosController {
         return toDosService.getTodos();
     }
 
-    @PutMapping("/{id}")
-    public List<ToDo> changeStatus(@PathVariable String id, @RequestBody ToDo todo){
+    @PatchMapping ("/{id}")
+    public List<ToDo> changeToDo(@PathVariable String id, @RequestBody ToDo todo){
         toDosService.changeToDoStatus(id, todo);
         return toDosService.getTodos();
     }

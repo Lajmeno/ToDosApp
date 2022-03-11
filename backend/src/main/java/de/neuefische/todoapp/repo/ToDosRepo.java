@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ToDosRepo extends MongoRepository<ToDo, String> {
 
-    List<ToDo> findAllByOrderBOrderByStatus();
+    List<ToDo> findAllByOrderByStatus();
 }

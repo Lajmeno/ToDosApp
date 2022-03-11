@@ -1,6 +1,7 @@
 package de.neuefische.todoapp.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -30,5 +31,18 @@ public class ToDo {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.dateTime = now.format(formatter);
+    }
+
+    public ToDo patch(ToDo toDo) {
+        if(toDo.getStatus() != null){
+            setStatus(toDo.getStatus());
+        }
+        if (toDo.getTitle() != null){
+            setTitle(toDo.getTitle());
+        }
+        if (toDo.getContent() != null){
+            setContent(toDo.getContent());
+        }
+        return this;
     }
 }

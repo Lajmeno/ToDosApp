@@ -7,7 +7,6 @@ import de.neuefische.todoapp.repo.ToDosRepo;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public class ToDosService {
     }
 
     public List<ToDo> getTodos() {
-        toDosRepo.findAllByOrderBOrderByStatus();
+        toDosRepo.findAllByOrderByStatus();
         return toDosRepo.findAll();
     }
 
@@ -28,10 +27,14 @@ public class ToDosService {
         toDosRepo.save(toDo);
     }
 
-    public void changeToDoStatus(String id, ToDo todo) {
-        toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
-                .findFirst()
-                .ifPresent(ele ->ele.setStatus(todo.getStatus()));
+    public void changeToDoStatus(String id, ToDo toDo) {
+        ToDo todo1 = toDosRepo.findById(id).get();
+        todo1.setStatus(Status.DONE);
+
+
+        toDosRepo.findById(id)
+                .map(t ->t.patch(toDo))
+                .map(t ->toDosRepo.save(t));
     }
 
     public void removeToDo(String id) {
