@@ -38,7 +38,10 @@ export default function ToDo(props:ToDoModelProps){
         setChangedStatus(newStatus);
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.item.id}`, {
         method: "PATCH",
-        body: JSON.stringify({status:newStatus}),
+        body: JSON.stringify({
+            status: newStatus,
+            title: props.item.title,
+            description: props.item.description}),
         headers: {
             'Content-Type': 'application/json',
         }})

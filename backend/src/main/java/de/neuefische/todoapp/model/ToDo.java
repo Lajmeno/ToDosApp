@@ -1,7 +1,6 @@
 package de.neuefische.todoapp.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ public class ToDo {
     private String id;
     private String dateTime;
     private String title;
-    private String content;
+    private String description;
 
     private Status status;
 
@@ -40,8 +39,8 @@ public class ToDo {
         if (toDo.getTitle() != null){
             setTitle(toDo.getTitle());
         }
-        if (toDo.getContent() != null){
-            setContent(toDo.getContent());
+        if (toDo.getDescription() != null){
+            setDescription(toDo.getDescription());
         }
         return this;
     }

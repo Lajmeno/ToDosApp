@@ -1,7 +1,7 @@
 export interface ToDoModel{
     id: string;
     title: string;
-    content: string;
+    description: string;
     dateTime: string;
     status: string;
 }
