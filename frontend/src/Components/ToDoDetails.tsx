@@ -37,7 +37,7 @@ export default function ToDoDetails(){
                 <Col xs={5} lg="2"><div className={toDo.status === "WAITING" ? "toDoStatusWaiting" : (toDo.status === "DONE" ? "toDoStatusDone" : "toDoStatusInprogress")}>{t(toDo.status)} </div></Col>
             </Row>
             <Row>
-                <Col> {toDo.content} </Col>
+                <Col> {toDo.description} </Col>
             </Row> 
             <Row>
                 <Col><Link to="/ToDosGallery"><Button>Back</Button></Link></Col>

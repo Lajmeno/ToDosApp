@@ -7,7 +7,6 @@ import de.neuefische.todoapp.repo.ToDosRepo;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,36 +19,37 @@ public class ToDosService {
     }
 
     public List<ToDo> getTodos() {
-        toDosRepo.getTodos().sort(Comparator.comparing(item -> item.getStatus()));
-        return toDosRepo.getTodos();
+        toDosRepo.findAllByOrderByStatus();
+        return toDosRepo.findAll();
     }
 
     public void addToDo(ToDo toDo) {
-        toDosRepo.addToDo(toDo);
+        toDosRepo.save(toDo);
     }
 
-    public void changeToDoStatus(String id, ToDo todo) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
-                .findFirst()
-                .ifPresent(ele ->ele.setStatus(todo.getStatus()));
+    public void changeToDoStatus(String id, ToDo toDo) {
+
+        toDosRepo.findById(id)
+                .map(t ->t.patch(toDo))
+                .map(t ->toDosRepo.save(t));
     }
 
     public void removeToDo(String id) {
-        toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
+        toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
-                .ifPresent(ele ->toDosRepo.getTodos().remove(ele));
+                .ifPresent(ele ->toDosRepo.delete(ele));
     }
 
     public void removeDoneToDos() {
-        var list = toDosRepo.getTodos().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
+        var list = toDosRepo.findAll().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
                 .toList();
         for (ToDo toDo: list) {
-            toDosRepo.getTodos().remove(toDo);
+            toDosRepo.delete(toDo);
         }
     }
 
     public Optional<ToDo> getOneToDO(String id) {
-        return toDosRepo.getTodos().stream().filter(ele -> ele.getId().equals(id))
+        return toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
                 .findFirst();
     }
 }

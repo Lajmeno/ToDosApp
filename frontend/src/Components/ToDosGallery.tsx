@@ -33,7 +33,7 @@ export default function ToDosGallery() {
 
         const requestBody = {
             title : newToDo.title,
-            content : newToDo.description
+            description : newToDo.description
         }
 
         fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
