@@ -3,12 +3,13 @@ package de.neuefische.todoapp.controller;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.service.ToDosService;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/todos")
-@CrossOrigin
 public class ToDosController {
 
     private final ToDosService toDosService;
@@ -18,37 +19,38 @@ public class ToDosController {
     }
 
     @GetMapping
-    public List<ToDo> getAllToDos(){
-        return toDosService.getTodos();
+    public List<ToDo> getAllToDos(Principal principal){
+        return toDosService.getTodos(principal.getName());
     }
 
     @GetMapping("/{id}")
-    public Optional<ToDo> getToDoById(@PathVariable String id){
-        return toDosService.getOneToDO(id);
+    public Optional<ToDo> getToDoById(@PathVariable String id, Principal principal){
+        return toDosService.getOneToDO(id, principal.getName());
     }
 
     @PostMapping()
-    public List<ToDo> addToDo(@RequestBody ToDo toDo){
+    public List<ToDo> addToDo(@RequestBody ToDo toDo, Principal principal){
+        toDo.setCreatedBy(principal.getName());
         toDosService.addToDo(toDo);
-        return toDosService.getTodos();
+        return toDosService.getTodos(toDo.getCreatedBy());
     }
 
     @PatchMapping ("/{id}")
     public List<ToDo> changeToDo(@PathVariable String id, @RequestBody ToDo todo){
         toDosService.changeToDoStatus(id, todo);
-        return toDosService.getTodos();
+        return toDosService.getTodos(todo.getCreatedBy());
     }
 
     @DeleteMapping("/{id}")
-    public List<ToDo> removeToDo(@PathVariable String id){
-        toDosService.removeToDo(id);
-        return toDosService.getTodos();
+    public List<ToDo> removeToDo(@PathVariable String id, Principal principal){
+        toDosService.removeToDo(id, principal.getName());
+        return toDosService.getTodos(principal.getName());
     }
 
     @DeleteMapping()
-    public List<ToDo> removeAllDoneToDos(){
-        toDosService.removeDoneToDos();
-        return toDosService.getTodos();
+    public List<ToDo> removeAllDoneToDos(Principal principal){
+        toDosService.removeDoneToDos(principal.getName());
+        return toDosService.getTodos(principal.getName());
     }
 
 

@@ -15,8 +15,8 @@ public class ToDo {
     private String dateTime;
     private String title;
     private String description;
-
     private Status status;
+    private String createdBy;
 
     public ToDo(){
         this("");

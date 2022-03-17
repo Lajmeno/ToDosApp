@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface ToDosRepo extends MongoRepository<ToDo, String> {
 
-    List<ToDo> findAllByOrderByStatus();
+
+    List<ToDo> findAllByCreatedBy(String email);
+
+    List<ToDo> findAllByCreatedByOrderByStatus(String email);
 }

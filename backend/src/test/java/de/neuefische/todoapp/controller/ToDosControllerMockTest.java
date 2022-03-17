@@ -29,8 +29,9 @@ public class ToDosControllerMockTest {
     void expectToGetOneToDo(){
         ToDo toDo = new ToDo();
         toDo.setTitle("Rechnung Test");
+        toDo.setCreatedBy("test@mail.com");
 
-        when(toDosService.getTodos()).thenReturn(List.of(toDo));
+        when(toDosService.getTodos("test@mail.com")).thenReturn(List.of(toDo));
 
         ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
         assertEquals(toDo, response.getBody()[0]);

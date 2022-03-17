@@ -4,6 +4,7 @@ package de.neuefische.todoapp.service;
 import de.neuefische.todoapp.model.Status;
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.repo.ToDosRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
@@ -11,16 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ToDosService {
-    private ToDosRepo toDosRepo;
 
-    public ToDosService(ToDosRepo toDosRepo) {
-        this.toDosRepo = toDosRepo;
-    }
+    private final ToDosRepo toDosRepo;
 
-    public List<ToDo> getTodos() {
-        toDosRepo.findAllByOrderByStatus();
-        return toDosRepo.findAll();
+
+    public List<ToDo> getTodos(String email) {
+        toDosRepo.findAllByCreatedByOrderByStatus(email);
+        return toDosRepo.findAllByCreatedBy(email);
     }
 
     public void addToDo(ToDo toDo) {
@@ -34,22 +34,22 @@ public class ToDosService {
                 .map(t ->toDosRepo.save(t));
     }
 
-    public void removeToDo(String id) {
-        toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
+    public void removeToDo(String id, String email) {
+        toDosRepo.findAllByCreatedBy(email).stream().filter(ele -> ele.getId().equals(id))
                 .findFirst()
                 .ifPresent(ele ->toDosRepo.delete(ele));
     }
 
-    public void removeDoneToDos() {
-        var list = toDosRepo.findAll().stream().filter(ele -> ele.getStatus().equals(Status.DONE))
+    public void removeDoneToDos(String email) {
+        var list = toDosRepo.findAllByCreatedBy(email).stream().filter(ele -> ele.getStatus().equals(Status.DONE))
                 .toList();
         for (ToDo toDo: list) {
             toDosRepo.delete(toDo);
         }
     }
 
-    public Optional<ToDo> getOneToDO(String id) {
-        return toDosRepo.findAll().stream().filter(ele -> ele.getId().equals(id))
+    public Optional<ToDo> getOneToDO(String id, String email) {
+        return toDosRepo.findAllByCreatedBy(email).stream().filter(ele -> ele.getId().equals(id))
                 .findFirst();
     }
 }
