@@ -27,9 +27,8 @@ public class ToDosService {
         toDosRepo.save(toDo);
     }
 
-    public void changeToDoStatus(String id, ToDo toDo) {
-
-        toDosRepo.findById(id)
+    public void changeToDoStatus(String id, ToDo toDo, String email) {
+        toDosRepo.findByIdAndCreatedBy(id, email)
                 .map(t ->t.patch(toDo))
                 .map(t ->toDosRepo.save(t));
     }

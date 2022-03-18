@@ -11,6 +11,7 @@ public class UserDocument {
 
     private String email;
     private String password;
+    private String verifyPassword;
     private String role;
 
     @Id

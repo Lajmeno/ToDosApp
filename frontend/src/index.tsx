@@ -7,17 +7,24 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ToDosGallery from './Components/ToDosGallery';
 import ToDoDetails from './Components/ToDoDetails';
+import Login from './Login/Login';
+import AuthProvider from './Login/AuthProvider';
+import Register from './Login/Register';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element = {<App/>} >
-          <Route path="/ToDosGallery" element={<ToDosGallery />} />
-          <Route path="ToDosGallery/:id" element={<ToDoDetails  />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element = {<App/>} >
+            <Route path="/login" element = {<Login/>} />
+            <Route path="/register" element = {<Register/>} />
+            <Route path="/gallery" element={<ToDosGallery />} />
+            <Route path="/gallery/:id" element={<ToDoDetails  />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

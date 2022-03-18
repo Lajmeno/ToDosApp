@@ -36,9 +36,9 @@ public class ToDosController {
     }
 
     @PatchMapping ("/{id}")
-    public List<ToDo> changeToDo(@PathVariable String id, @RequestBody ToDo todo){
-        toDosService.changeToDoStatus(id, todo);
-        return toDosService.getTodos(todo.getCreatedBy());
+    public List<ToDo> changeToDo(@PathVariable String id, @RequestBody ToDo todo, Principal principal){
+        toDosService.changeToDoStatus(id, todo, principal.getName());
+        return toDosService.getTodos(principal.getName());
     }
 
     @DeleteMapping("/{id}")

@@ -39,7 +39,7 @@ class ToDosServiceTest {
         service.addToDo(toDo);
 
         when(mockRepo.findAllByCreatedBy("test@mail.com")).thenReturn(List.of(toDo, toDo2));
-        service.changeToDoStatus(toDo.getId(), toDo2);
+        service.changeToDoStatus(toDo.getId(), toDo2, "test@mail.com");
 
         assertTrue(service.getTodos("test@mail.com").get(0).getStatus().equals(Status.INPROGRESS));
     }

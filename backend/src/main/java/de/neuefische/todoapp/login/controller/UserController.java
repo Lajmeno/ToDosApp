@@ -27,8 +27,12 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDocument> saveUserInRepo(@RequestBody UserDocument user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<UserDocument> newUser= userService.saveUser(user);
-        return ResponseEntity.of(newUser);
+        if(user.getPassword().equals(user.getVerifyPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            Optional<UserDocument> newUser= userService.saveUser(user);
+            return ResponseEntity.of(newUser);
+        }
+        return ResponseEntity.notFound().build();
+
     }
 }
