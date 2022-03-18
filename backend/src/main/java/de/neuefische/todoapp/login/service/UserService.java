@@ -14,8 +14,8 @@ public class UserService {
 
     private final MongoUserRepo mongoUserRepo;
 
-    public Optional<UserDocument> findByUsername(String username) {
-        return mongoUserRepo.findByEmail(username);
+    public Optional<UserDocument> findByEmail(String email) {
+        return mongoUserRepo.findByEmail(email);
     }
 
     public Optional<UserDocument> saveUser(UserDocument user) {

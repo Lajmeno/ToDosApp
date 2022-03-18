@@ -25,7 +25,7 @@ public class ToDosController {
 
     @GetMapping("/{id}")
     public Optional<ToDo> getToDoById(@PathVariable String id, Principal principal){
-        return toDosService.getOneToDO(id, principal.getName());
+        return toDosService.getOneToDo(id, principal.getName());
     }
 
     @PostMapping()

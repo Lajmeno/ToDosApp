@@ -47,7 +47,7 @@ public class ToDosService {
         }
     }
 
-    public Optional<ToDo> getOneToDO(String id, String email) {
+    public Optional<ToDo> getOneToDo(String id, String email) {
         return toDosRepo.findAllByCreatedBy(email).stream().filter(ele -> ele.getId().equals(id))
                 .findFirst();
     }
