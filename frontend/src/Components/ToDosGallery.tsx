@@ -64,7 +64,7 @@ export default function ToDosGallery() {
     }
 
     if(!localStorage.getItem("jwt")){
-        navigate("/login")
+        navigate("/login");
     }
 
     return( 

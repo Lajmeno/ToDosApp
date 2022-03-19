@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Container, FormControl, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { LoginData, RegisterData } from "./LoginModels";
+import { RegisterData } from "./LoginModels";
 
 
 export default function Register(){
@@ -10,8 +10,6 @@ export default function Register(){
     const [registerData, setRegisterData]= useState({} as RegisterData)
 
     const [errorMessage, setErrorMessage] = useState("");
-
-
 
     const register = () => {
         const requestBody = {
