@@ -4,6 +4,7 @@ package de.neuefische.todoapp.login.controller;
 import de.neuefische.todoapp.login.model.UserDocument;
 import de.neuefische.todoapp.login.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDocument> saveUserInRepo(@RequestBody UserDocument user){
         if(user.getPassword().equals(user.getVerifyPassword())){
             user.setRole("USER");
