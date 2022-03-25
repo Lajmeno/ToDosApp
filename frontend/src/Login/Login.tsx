@@ -25,6 +25,20 @@ export default function Login(){
             .then(response => {return response.text()})
             .then(responseBody =>{localStorage.setItem("jwt", responseBody); navigate("/gallery"); })
     }
+    const spotifyLogin = () => {
+        const requestBody = {
+            email : loginData.email,
+            password : loginData.password
+        }
+        fetch(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
+            method: "POST", 
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json',
+            }})
+            .then(response => {return response.text()})
+            .then(responseBody =>{localStorage.setItem("jwt", responseBody); navigate("/gallery"); })
+    }
 
     return(
         <div>
@@ -45,7 +59,14 @@ export default function Login(){
                     <Col md="auto"><Button onClick={() => login()}>Login</Button></Col>
                     <Col><Link to="/register"><Button>Register New User</Button></Link></Col>
                 </Row>
+                <Row>
+                     <Col md="auto"><Button onClick={() => spotifyLogin()}>Spotify-Login</Button></Col>
+                    <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=6a813b18cb8940bbbe1daab2ab175e60&scope=user-read-private&redirect_uri=http://localhost:5000/callback">Spotify</a>
+                </Row>
                 </Container>
+
         </div>
     )
 }
+
+
