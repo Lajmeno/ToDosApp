@@ -22,10 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class ToDosControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
+
     @Test
     void shouldCreateNewTestUser(){
         ResponseEntity<UserDocument> createResponse = restTemplate.postForEntity("/users", new UserDocument("test@email.com", "test", "test", "USER", null), UserDocument.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
 
         ResponseEntity<String> loginResponse = restTemplate.postForEntity("/auth/login", new LoginData("test@email.com", "test"), String.class);
         assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -37,6 +39,7 @@ class ToDosControllerTest {
         ResponseEntity<List> getToDosResponse = restTemplate.exchange("/todos", HttpMethod.GET, new HttpEntity<>(createHeaders(loginResponse.getBody())), List.class);
         assertThat(getToDosResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
+
     }
 
     HttpHeaders createHeaders(String token) {
@@ -46,29 +49,5 @@ class ToDosControllerTest {
         }};
     }
 
-
-    @Test
-    @Disabled
-    void expectToGetOneToDo(){
-        ToDo toDo = new ToDo();
-        toDo.setTitle("Rechnung Test");
-        restTemplate.postForEntity("/todos",toDo, ToDo[].class );
-        ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
-        assertThat(response.getBody()).contains(toDo);
-    }
-
-    @Test
-    @Disabled
-    void expectToChangeStatusOf1ToDo(){
-        ToDo toDo = new ToDo();
-        toDo.setTitle("Einkauf");
-        ToDo toDo2 = new ToDo("Pizza");
-        toDo2.setStatus(Status.INPROGRESS);
-        restTemplate.postForEntity("/todos", toDo, ToDo[].class );
-        restTemplate.put("/todos/" + toDo.getId(), toDo2);
-        ResponseEntity<ToDo[]> response = restTemplate.getForEntity("/todos", ToDo[].class);
-
-        assertEquals(Status.INPROGRESS, response.getBody()[0].getStatus());
-    }
 
 }
