@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, FormControl, InputGroup, Row, ThemeProvider } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ToDo from "./ToDo";
-import { ToDoModel } from "./TodoModel";
+import { ToDoModel } from "../Models";
 
 import './ToDosGallery.css';
+import { useNavigate } from "react-router-dom";
 
 
 export default function ToDosGallery() {
@@ -16,8 +17,13 @@ export default function ToDosGallery() {
     
     const [errorMessage, setErrorMessage] = useState("");
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todos`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
+        headers:{
+            "Authorization": "Bearer"+ localStorage.getItem("jwt")
+        }})
         .then(response => {
             if(response.ok){
                 return response.json()
@@ -41,6 +47,7 @@ export default function ToDosGallery() {
         body: JSON.stringify(requestBody),
         headers: {
             'Content-Type': 'application/json',
+            "Authorization": "Bearer"+ localStorage.getItem("jwt")
         }})
         .then(response => response.json())
         .then(responseBody => setToDos(responseBody))
@@ -48,9 +55,16 @@ export default function ToDosGallery() {
 
     const deleteDoneToDos = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
-        method: "DELETE"})
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer"+ localStorage.getItem("jwt")
+        }})
         .then(response => response.json())
         .then(responseBody => setToDos(responseBody));
+    }
+
+    if(!localStorage.getItem("jwt")){
+        navigate("/login");
     }
 
     return( 

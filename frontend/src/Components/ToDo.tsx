@@ -1,4 +1,4 @@
-import { ToDoModel } from "./TodoModel";
+import { ToDoModel } from "../Models";
 import './ToDo.css';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,10 @@ export default function ToDo(props:ToDoModelProps){
 
     const deleteToDo = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.item.id}`, {
-        method: "DELETE"})
+        method: "DELETE",
+        headers:{
+            "Authorization": "Bearer"+ localStorage.getItem("jwt")
+        }})
         .then(response => response.json())
         .then((todos : Array<ToDoModel>) => props.onItemChange(todos));
     }
@@ -44,6 +47,7 @@ export default function ToDo(props:ToDoModelProps){
             description: props.item.description}),
         headers: {
             'Content-Type': 'application/json',
+            "Authorization": "Bearer"+ localStorage.getItem("jwt")
         }})
         .then(response => response.json())
         .then((todos : Array<ToDoModel>) => props.onItemChange(todos));

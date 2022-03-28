@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
-import { ToDoModel } from "./TodoModel";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ToDoModel } from "../Models";
 
 export default function ToDoDetails(){
     
@@ -14,8 +14,13 @@ export default function ToDoDetails(){
 
     const[errorMessage, setErrorMessage] = useState("");
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${param.id}`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${param.id}`, {
+            headers:{
+                "Authorization": "Bearer"+ localStorage.getItem("jwt")
+            }})
         .then(response => {return response.json()})
         .then(responseBody  => {
             if(responseBody){
@@ -26,6 +31,10 @@ export default function ToDoDetails(){
         .then(responseBody => setToDo(responseBody))
         .catch((e:Error) => {setErrorMessage(e.message)})
     },[param.id]);
+
+    if(!localStorage.getItem("jwt")){
+        navigate("/login")
+    }
     
     return (
         <div>
@@ -40,7 +49,7 @@ export default function ToDoDetails(){
                 <Col> {toDo.description} </Col>
             </Row> 
             <Row>
-                <Col><Link to="/ToDosGallery"><Button>Back</Button></Link></Col>
+                <Col><Link to="/gallery"><Button>Back</Button></Link></Col>
             </Row> 
 
         </div>

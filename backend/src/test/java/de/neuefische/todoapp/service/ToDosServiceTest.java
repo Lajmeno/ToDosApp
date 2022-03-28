@@ -20,13 +20,12 @@ class ToDosServiceTest {
         ToDosService service = new ToDosService(mockRepo);
         ToDo toDo = new ToDo("Aufraeumen");
         service.addToDo(toDo);
-        when(mockRepo.findAll()).thenReturn(List.of(toDo));
+        when(mockRepo.findAllByCreatedBy("test@mail.com")).thenReturn(List.of(toDo));
 
-        assertEquals(List.of(toDo), service.getTodos());
+        assertEquals(List.of(toDo), service.getTodos("test@mail.com"));
     }
 
     @Test
-    @Disabled
     void expectToChangeStatusToInprogress(){
         ToDosRepo mockRepo = mock(ToDosRepo.class);
         ToDosService service = new ToDosService(mockRepo);
@@ -37,10 +36,10 @@ class ToDosServiceTest {
         toDo2.setStatus(Status.INPROGRESS);
         service.addToDo(toDo);
 
-        when(mockRepo.findAll()).thenReturn(List.of(toDo, toDo2));
-        service.changeToDoStatus(toDo.getId(), toDo2);
+        when(mockRepo.findAllByCreatedBy("test@mail.com")).thenReturn(List.of(toDo, toDo2));
+        service.changeToDoStatus(toDo.getId(), toDo2, "test@mail.com");
 
-        assertTrue(service.getTodos().get(0).getStatus().equals(Status.INPROGRESS));
+        assertTrue(service.getTodos("test@mail.com").get(1).getStatus().equals(Status.INPROGRESS));
     }
 
     @Test
@@ -51,29 +50,11 @@ class ToDosServiceTest {
         ToDo toDo2 = new ToDo("Einkauf");
         service.addToDo(toDo1);
         service.addToDo(toDo2);
-        when(mockRepo.findAll()).thenReturn(List.of(toDo1, toDo2));
-        service.removeToDo(toDo1.getId());
-        when(mockRepo.findAll()).thenReturn(List.of(toDo2));
-        assertEquals(List.of(toDo2), service.getTodos());
+        when(mockRepo.findAllByCreatedBy("test@mail.com")).thenReturn(List.of(toDo1, toDo2));
+        service.removeToDo(toDo1.getId(), "test@mail.com");
+        when(mockRepo.findAllByCreatedBy("test@mail.com")).thenReturn(List.of(toDo2));
+        assertEquals(List.of(toDo2), service.getTodos("test@mail.com"));
     }
 
-    @Test
-    @Disabled
-    void expectsToRemoveAllDoneToDos(){
-        ToDosRepo mockRepo = mock(ToDosRepo.class);
-        ToDosService service = new ToDosService(mockRepo);
-        ToDo toDo1 = new ToDo("Stromrechnung");
-        ToDo toDo2 = new ToDo("Einkauf");
-        ToDo toDo3 = new ToDo("Never Done");
-        toDo1.setStatus(Status.DONE);
-        toDo2.setStatus(Status.DONE);
-        service.addToDo(toDo1);
-        service.addToDo(toDo2);
-        service.addToDo(toDo3);
-
-        service.removeDoneToDos();
-
-        assertEquals(List.of(toDo3), service.getTodos());
-    }
 
 }
